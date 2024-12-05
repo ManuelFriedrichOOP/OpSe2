@@ -49,6 +49,17 @@ public class VolkshochschulkursView {
     // speichert temporaer ein Objekt vom Typ Volkshochschulkurs
     private VolkshochschulkursControl control;
     private VolkshochschulkursModel model;
+    
+    public VolkshochschulkursView(Stage primaryStage, VolkshochschulkursControl control,VolkshochschulkursModel model){
+     	this.control = control;
+ 		this.model = model;
+ 		Scene scene = new Scene(this.pane, 700, 340);
+     	primaryStage.setScene(scene);
+     	primaryStage.setTitle("Verwaltung von Volkshochschulkurs");
+     	primaryStage.show();
+     	this.initKomponenten();
+ 		this.initListener();
+     }	
         
     private void initKomponenten(){
        	// Labels
@@ -113,7 +124,8 @@ public class VolkshochschulkursView {
  		// Menue
         this.mnbrMenuLeiste.getMenus().add(mnDatei);
   	    this.mnDatei.getItems().add(mnItmCsvExport);
-  	    this.mnDatei.getItems().add(mnItmTxtExport);
+  	    this.mnDatei.getItems().add(mnItmCsvImport);
+  	    this.mnDatei.getItems().add(mnItmTxtImport);
  	    pane.getChildren().add(mnbrMenuLeiste);
    }
    
@@ -123,13 +135,6 @@ public class VolkshochschulkursView {
             @Override
             public void handle(ActionEvent e) {
          	   schreibeVolkshochschulkursInDatei("csv");
-            }
- 	   });
- 	   
- 	   mnItmTxtExport.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-         	   schreibeVolkshochschulkursInDatei("txt");
             }
  	   });
  	  mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
@@ -171,6 +176,10 @@ public class VolkshochschulkursView {
         	"Fehler", meldung).zeigeMeldungsfensterAn();
     }
  	
+ 	private void leseVolkshochschulkursAusDatei(String typ) {
+		this.control.leseAusDatei(typ);
+	} 
+ 	
  	private void schreibeVolkshochschulkursInDatei(String typ) {
  		this.control.schreibeVolkshochschulkursInDatei(typ);
  	} 
@@ -179,8 +188,8 @@ public class VolkshochschulkursView {
      	try{
      		this.model.vhk = new Volkshochschulkurs(
      			txtName.getText(), 
-    	            txtWochentag.getText(),
-    	            txtStartuhrzeit.getText(),
+    	        txtWochentag.getText(),
+    	        txtStartuhrzeit.getText(),
      		    txtKursbeitrag.getText(),
      		    txtVorkenntnisse.getText().split(";"));
      		zeigeInformationsfensterAn("Volkshochschulkurs wurde aufgenommen!");
@@ -199,17 +208,5 @@ public class VolkshochschulkursView {
      	}else{
      		zeigeInformationsfensterAn("Bisher wurde kein Volkshochschulkurs aufgenommen!");
      	}
-     }	
-     
-     
-     public VolkshochschulkursView(Stage primaryStage, VolkshochschulkursControl control,VolkshochschulkursModel model){
-     	this.control = control;
- 		this.model = model;
- 		Scene scene = new Scene(this.pane, 700, 340);
-     	primaryStage.setScene(scene);
-     	primaryStage.setTitle("Verwaltung von Volkshochschulkurs");
-     	primaryStage.show();
-     	this.initKomponenten();
- 		this.initListener();
      }	
  }

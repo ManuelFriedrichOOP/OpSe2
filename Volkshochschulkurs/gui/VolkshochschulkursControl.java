@@ -25,7 +25,7 @@ public class VolkshochschulkursControl {
 		try {
 			if("csv".equals(typ)) {
 				this.model.schreibeVolkshochschulkursInCsvDatei();
-				this.view.zeigeInformationsfensterAn("Die Volkshochschulkurse wurden gespeichert");
+				this.view.zeigeInformationsfensterAn("Volkshochschulkurs wurde gespeichert");
 			} else {
 				this.view.zeigeInformationsfensterAn("Noch nicht implementiert");
 			}
@@ -39,28 +39,26 @@ public class VolkshochschulkursControl {
 		} 
 	}
 	public void leseAusDatei(String typ){
+    	
     	try {
-      		if("csv".equals(typ)){
-      			BufferedReader ein = new BufferedReader(new FileReader("Volkshochschulkurs.csv"));
-      			String[] zeile = ein.readLine().split(";");
-      			this.model.setVhk(new Volkshochschulkurs(zeile[0], 
-          				(zeile[1]), 
-          				(zeile[2]), 
-          				zeile[3], zeile[4].split("_")));
-      				ein.close();
-      				view.zeigeInformationsfensterAn("Die Volkshochschulkurs wurden gelesen!");      
-      		}
-       		else{
-       			view.zeigeInformationsfensterAn("Noch nicht implementiert!");
-	   		}
-		}
-		catch(IOException exc){
-			view.zeigeFehlermeldungsfensterAn(
-				"IOException beim Lesen!");
-		}
-		catch(Exception exc){
-			view.zeigeFehlermeldungsfensterAn(
-				"Unbekannter Fehler beim Lesen!");
-		}
+			if("csv".equals(typ)) {
+				this.model.leseVolkshochschulkursAusCsvDatei();
+				this.view.zeigeInformationsfensterAn("Volkshochschulkurs wurde importiert");
+			} 
+			else if("txt".equals(typ)) {
+				this.model.leseVolkshochschulkursAusTxtDatei();
+				this.view.zeigeInformationsfensterAn("Volkshochschulkurs wurde importiert");
+			}
+			else {
+				this.view.zeigeInformationsfensterAn("Noch nicht implementiert");
+			}
+		} 
+		catch (IOException ioe) {
+			view.zeigeFehlermeldungsfensterAn("IOException");
+			ioe.printStackTrace();
+		} catch(Exception exc) {
+			view.zeigeFehlermeldungsfensterAn("Unbekannter Fehler beim Importieren!");
+			exc.printStackTrace();
+		} 
 	}
 }
