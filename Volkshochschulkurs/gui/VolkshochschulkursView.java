@@ -1,4 +1,4 @@
-package gui;
+package guiVolkshochschulkurs;
    
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -186,12 +186,12 @@ public class VolkshochschulkursView {
      
      private void schreibeVolkshochschulkurs(){
      	try{
-     		this.model.vhk = new Volkshochschulkurs(
+     		this.model.setVhk(new Volkshochschulkurs(
      			txtName.getText(), 
     	        txtWochentag.getText(),
     	        txtStartuhrzeit.getText(),
      		    txtKursbeitrag.getText(),
-     		    txtVorkenntnisse.getText().split(";"));
+     		    txtVorkenntnisse.getText().split(";")));
      		zeigeInformationsfensterAn("Volkshochschulkurs wurde aufgenommen!");
         	}
         	catch(Exception exc){
@@ -201,10 +201,10 @@ public class VolkshochschulkursView {
      }
      
     
-     private void zeigeVolkshochschulkursAn(){
-     	if(model.vhk != null){
+     public void zeigeVolkshochschulkursAn(){
+     	if(model.getVhk() != null){
      		txtAnzeige.setText(
-     				model.vhk.gibVolkshochschulkursZurueck(' '));
+     				model.getVhk().gibVolkshochschulkursZurueck(' '));
      	}else{
      		zeigeInformationsfensterAn("Bisher wurde kein Volkshochschulkurs aufgenommen!");
      	}

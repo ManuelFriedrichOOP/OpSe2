@@ -22,10 +22,9 @@ public class ConcreteCsvProduct extends Product {
 	@Override
 	public String[] leseAusDatei() throws IOException {
 		
-		aus = new BufferedReader(new FileReader("Volkshochschulkurs.txt"));
+		aus = new BufferedReader(new FileReader("Volkshochschulkurs.csv"));
 		String zeile[] = aus.readLine().split(";");
 		return zeile;
-		
 	}
 
 

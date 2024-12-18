@@ -1,4 +1,4 @@
-package gui;
+package guiVolkshochschulkurs;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -8,17 +8,20 @@ import business.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import ownUtil.MeldungsfensterAnzeiger;
+import ownUtil.Observer;
 import business.Volkshochschulkurs;
 import business.VolkshochschulkursModel;
+import guiWissenschaffUndBildung.WissenschaftUndBildungView;
 
-public class VolkshochschulkursControl {
+public class VolkshochschulkursControl implements Observer{
 	
 	private VolkshochschulkursView view;
 	private VolkshochschulkursModel model;
 	
 	public VolkshochschulkursControl(Stage primaryStage) throws Exception {
-		this.model = new VolkshochschulkursModel();
+		this.model = VolkshochschulkursModel.getInstance();
 		this.view = new VolkshochschulkursView(primaryStage, this, model);
+		model.observers.add(this);
 	}
 	
 	public void schreibeVolkshochschulkursInDatei(String typ) {
@@ -60,5 +63,11 @@ public class VolkshochschulkursControl {
 			view.zeigeFehlermeldungsfensterAn("Unbekannter Fehler beim Importieren!");
 			exc.printStackTrace();
 		} 
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		view.zeigeVolkshochschulkursAn();
 	}
 }
